@@ -48,6 +48,12 @@ def _format_size(size, sign):
         size /= 1024
 
 
+def _unsign_size(size):
+    if size < 0:
+        return 4294967294 + size
+    return size
+
+
 class Statistic(object):
     """
     Statistic difference on memory allocations between two Snapshot instance.
@@ -477,6 +483,7 @@ class Snapshot(object):
         if not cumulative:
             for trace in self.traces._traces:
                 size, trace_traceback = trace
+                size = _unsign_size(size)
                 try:
                     traceback = tracebacks[trace_traceback]
                 except KeyError:
@@ -499,6 +506,7 @@ class Snapshot(object):
             # cumulative statistics
             for trace in self.traces._traces:
                 size, trace_traceback = trace
+                size = _unsign_size(size)
                 for frame in trace_traceback:
                     try:
                         traceback = tracebacks[frame]
