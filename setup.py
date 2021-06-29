@@ -65,7 +65,7 @@ def get_version():
 
 
 setup(
-    name="mprofile",
+    name="mprofile_fixed",
     version=get_version(),
     description="A low-overhead memory profiler.",
     long_description=long_description,
